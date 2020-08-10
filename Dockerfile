@@ -12,15 +12,15 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
 WORKDIR /
 
 #Install Ruby On Rails
-RUN gem install mysql2 pg rails && rails new app -d mysql
+RUN gem install mysql2 pg rails && rails new app --webpack=vue -d postgresql
 WORKDIR /app
 
 RUN echo "gem 'sidekiq', '>= 6'" >> Gemfile \
     && echo "gem 'redis', '>= 4'" >> Gemfile \
     && bundle install
 
-COPY image/database.yml /app/config/
 COPY image/sidekiq-entrypoint.sh /
+COPY image/database.yml /app/config/
 
 
 EXPOSE 3000
