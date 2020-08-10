@@ -150,7 +150,7 @@ services:
     networks:
       default:
 
-  phpadmin:
+  pgadmin:
     image: dpage/pgadmin4
     container_name: rails-pgadmin
     restart: always

@@ -19,9 +19,11 @@ RUN echo "gem 'sidekiq', '>= 6'" >> Gemfile \
     && echo "gem 'redis', '>= 4'" >> Gemfile \
     && bundle install
 
+RUN sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/development.rb \
+    && sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/test.rb
+
 COPY image/sidekiq-entrypoint.sh /
 COPY image/database.yml /app/config/
-
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
