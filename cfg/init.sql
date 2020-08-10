@@ -1,6 +1,6 @@
-CREATE DATABASE rails_dev;
-CREATE DATABASE rails_test;
-CREATE DATABASE rails;
+CREATE DATABASE rails_dev ENCODING = 'unicode';
+CREATE DATABASE rails_test ENCODING = 'unicode';
+CREATE DATABASE rails ENCODING = 'unicode';
 
 CREATE USER rails PASSWORD 'rails';
 GRANT ALL PRIVILEGES ON DATABASE rails_dev, rails_test, rails TO rails;
