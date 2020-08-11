@@ -15,8 +15,15 @@ WORKDIR /
 RUN gem install mysql2 pg rails && rails new app --webpack=vue -d postgresql
 WORKDIR /app
 
-RUN echo "gem 'sidekiq', '>= 6'" >> Gemfile \
+RUN    echo "\n#######################################################################" >> Gemfile \
+    && echo "# Rails addon gems" >> Gemfile \
+    && echo "#######################################################################" >> Gemfile \
+    && echo "gem 'sidekiq', '>= 6'" >> Gemfile \
     && echo "gem 'redis', '>= 4'" >> Gemfile \
+    && echo "gem 'devise'" >> Gemfile \
+    && echo "gem 'bootstrap', '>= 4'" >> Gemfile \
+    && echo "gem 'jquery-rails'" >> Gemfile \
+    && echo "gem 'simple_form'" >> Gemfile \
     && bundle install
 
 RUN sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/development.rb \
