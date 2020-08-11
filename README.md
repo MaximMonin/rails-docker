@@ -12,4 +12,4 @@ Includes Selenium Browser test setup, Postgres DB adminer, Sidekiq server
 5. Postgres db will be created on first run.   
 
 Run run_tests.sh to run rails test   
-Run run_tests_system.sh ti run system browser tests through selenium   
+Run run_tests_system.sh to run system browser tests through selenium   
