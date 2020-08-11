@@ -7,6 +7,7 @@ Includes Selenium Browser test setup, Postgres DB adminer, Sidekiq server
 ## Installation
 1. Build rails Image. Use build.sh. You can use docker pull maximmonin/rails instead.   
 2. Run prepare.sh to extract rails app directory from rails docker image to ./app   
+3. Copy .env-example to .env and change to your site   
 4. Start containters start.sh   
 5. Postgres db will be created on first run.   
 
