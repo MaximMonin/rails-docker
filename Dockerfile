@@ -15,15 +15,13 @@ WORKDIR /
 RUN gem install mysql2 pg rails && rails new app --webpack=vue -d postgresql --skip-turbolinks
 WORKDIR /app
 
-RUN yarn add @vue/cli vue-router bootstrap-vue vuex axios
-
 RUN    echo "\n#######################################################################" >> Gemfile \
     && echo "# Rails addon gems" >> Gemfile \
     && echo "# Job processing, auth, image/video processing, bootstrap, sms, file storage" >> Gemfile \
     && echo "#######################################################################" >> Gemfile \
     && echo "gem 'sidekiq', '>= 6'" >> Gemfile \
     && echo "gem 'devise'" >> Gemfile \
-    && echo "gem 'jwt_sessions'" >> GemFile \
+    && echo "gem 'jwt_sessions'" >> Gemfile \
     && echo "gem 'image_processing', '~> 1.2'" >> Gemfile \
     && echo "gem 'streamio-ffmpeg', '>= 2'" >> Gemfile \
     && echo "gem 'bootstrap', '>= 4'" >> Gemfile \
@@ -40,12 +38,14 @@ RUN    echo "\n#################################################################
     && echo "end" >> Gemfile \
     && bundle install \
     && rails generate simple_form:install --bootstrap \
-    && rails generate devise:install && rails generate devise:views 
+    && rails generate devise:install && rails generate devise:views
 
 RUN sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/development.rb \
     && sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/test.rb
 
 COPY image /
+
+RUN yarn add vue-router bootstrap-vue vuex axios
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
