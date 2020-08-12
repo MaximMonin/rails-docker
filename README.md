@@ -14,3 +14,4 @@ Includes Selenium Browser test setup, Postgres DB adminer, Sidekiq server
 Run run_tests.sh to run rails test   
 Run run_tests_system.sh to run system browser tests through selenium   
 Run run_webpack.sh to compile java scripts with webpack   
+Run run_precompile.sh to precompile assets for production use   
