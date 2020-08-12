@@ -37,7 +37,8 @@ RUN    echo "\n#################################################################
     && echo "\ngroup :development, :test do" >> Gemfile \
     && echo "  gem 'faker'" >> Gemfile \
     && echo "end" >> Gemfile \
-    && bundle install
+    && bundle install \
+    && rails generate simple_form:install --bootstrap
 
 RUN sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/development.rb \
     && sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/test.rb
