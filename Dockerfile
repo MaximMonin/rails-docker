@@ -12,10 +12,10 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
 WORKDIR /
 
 #Install Ruby On Rails
-RUN gem install mysql2 pg rails && rails new app --webpack=vue -d postgresql
+RUN gem install mysql2 pg rails && rails new app --webpack=vue -d postgresql --skip-turbolinks
 WORKDIR /app
 
-RUN yarn add vue-router bootstrap-vue vuex
+RUN yarn add @vue/cli vue-router bootstrap-vue vuex axios
 
 RUN    echo "\n#######################################################################" >> Gemfile \
     && echo "# Rails addon gems" >> Gemfile \
@@ -23,6 +23,7 @@ RUN    echo "\n#################################################################
     && echo "#######################################################################" >> Gemfile \
     && echo "gem 'sidekiq', '>= 6'" >> Gemfile \
     && echo "gem 'devise'" >> Gemfile \
+    && echo "gem 'jwt_sessions'" >> GemFile \
     && echo "gem 'image_processing', '~> 1.2'" >> Gemfile \
     && echo "gem 'streamio-ffmpeg', '>= 2'" >> Gemfile \
     && echo "gem 'bootstrap', '>= 4'" >> Gemfile \
@@ -38,7 +39,8 @@ RUN    echo "\n#################################################################
     && echo "  gem 'faker'" >> Gemfile \
     && echo "end" >> Gemfile \
     && bundle install \
-    && rails generate simple_form:install --bootstrap
+    && rails generate simple_form:install --bootstrap \
+    && rails generate devise:install && rails generate devise:views 
 
 RUN sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/development.rb \
     && sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/test.rb
