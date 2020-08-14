@@ -17,20 +17,17 @@ WORKDIR /app
 
 RUN    echo "\n#######################################################################" >> Gemfile \
     && echo "# Rails addon gems" >> Gemfile \
-    && echo "# Job processing, auth, image/video processing, bootstrap, sms, file storage" >> Gemfile \
+    && echo "# Job processing, auth, image/video processing, sms, file storage" >> Gemfile \
     && echo "#######################################################################" >> Gemfile \
     && echo "gem 'sidekiq', '>= 6'" >> Gemfile \
     && echo "gem 'devise'" >> Gemfile \
     && echo "gem 'jwt_sessions'" >> Gemfile \
     && echo "gem 'image_processing', '~> 1.2'" >> Gemfile \
     && echo "gem 'streamio-ffmpeg', '>= 2'" >> Gemfile \
-    && echo "gem 'bootstrap', '>= 4'" >> Gemfile \
-    && echo "gem 'jquery-rails'" >> Gemfile \
     && echo "gem 'simple_form'" >> Gemfile \
     && echo "gem 'turbosms'" >> Gemfile \
     && echo "gem 'dotenv-rails'" >> Gemfile \
     && echo "gem 'rack-cors'" >> Gemfile \
-    && echo "gem 'dropzonejs-rails'" >> Gemfile \
     && echo "gem 'aws-sdk-s3'" >> Gemfile \
     && echo "gem 'activestorage-sftp'" >> Gemfile \
     && echo "\ngroup :development, :test do" >> Gemfile \
@@ -45,7 +42,8 @@ RUN sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n
 
 COPY image /
 
-RUN yarn add vue-router bootstrap-vue vuex axios
+RUN yarn add bootstrap jquery popper.js dropzone vue-router bootstrap-vue vuex axios \
+    && rm -f app/javascript/packs/hello_vue.js app/javascript/app.vue
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
