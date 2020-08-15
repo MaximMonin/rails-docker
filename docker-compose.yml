@@ -41,6 +41,7 @@ services:
     environment:
       - RAILS_ENV=development
       - REDIS_URL=redis://redis:6379
+      - APP_DATABASE_PASSWORD=rails
     volumes:
      - ./app:/app
      - ./cfg/mail:/etc/ssmtp
@@ -69,6 +70,7 @@ services:
     environment:
       - RAILS_ENV=development
       - REDIS_URL=redis://redis:6379
+      - APP_DATABASE_PASSWORD=rails
     volumes:
      - ./app:/app
      - ./cfg/mail:/etc/ssmtp
