@@ -42,6 +42,7 @@ services:
       - RAILS_ENV=development
       - REDIS_URL=redis://redis:6379
       - APP_DATABASE_PASSWORD=rails
+      - VIRTUAL_HOST
     volumes:
      - ./app:/app
      - ./cfg/mail:/etc/ssmtp
@@ -71,6 +72,7 @@ services:
       - RAILS_ENV=development
       - REDIS_URL=redis://redis:6379
       - APP_DATABASE_PASSWORD=rails
+      - VIRTUAL_HOST
     volumes:
      - ./app:/app
      - ./cfg/mail:/etc/ssmtp
