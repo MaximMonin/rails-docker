@@ -44,8 +44,7 @@ RUN    echo "\n#################################################################
     && echo "end" >> Gemfile \
     && bundle install \
     && rails generate simple_form:install --bootstrap \
-    && rails generate devise:install && rails generate devise:i18n:views \
-    && rails active_storage:install
+    && rails generate devise:install && rails generate devise:i18n:views
 
 RUN sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/development.rb \
     && sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/test.rb
