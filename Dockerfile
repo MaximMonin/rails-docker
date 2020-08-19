@@ -51,7 +51,7 @@ RUN sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n
 
 COPY image /
 
-RUN yarn add bootstrap jquery popper.js dropzone vue-router bootstrap-vue vuex axios
+RUN yarn add bootstrap jquery popper.js dropzone vue-router bootstrap-vue vuex axios actioncable-vue
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
