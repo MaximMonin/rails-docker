@@ -1,0 +1,4 @@
+:queues:
+  - [default, 3]
+  - [mailers, 1]
+  - [low_priority, 2]
