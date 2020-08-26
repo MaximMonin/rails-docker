@@ -24,8 +24,6 @@ RUN    echo "\n#################################################################
     && echo "#######################################################################" >> Gemfile \
     && echo "gem 'sidekiq', '>= 6'" >> Gemfile \
     && echo "gem 'devise'" >> Gemfile \
-    && echo "gem 'jwt_sessions'" >> Gemfile \
-    && echo "gem 'rack-cors'" >> Gemfile \
     && echo "gem 'will_paginate', '>= 3'" >> Gemfile \
     && echo "gem 'image_processing', '~> 1.2'" >> Gemfile \
     && echo "gem 'streamio-ffmpeg', '>= 2'" >> Gemfile \
