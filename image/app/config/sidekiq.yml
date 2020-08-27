@@ -6,4 +6,5 @@
   - [default, 3]
   - [mailers, 1]
   - [active_storage_analysis, 1]
+  - [active_storage_purge, 1]
   - [low_priority, 1]
