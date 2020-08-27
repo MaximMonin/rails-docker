@@ -5,4 +5,5 @@
 :queues:
   - [default, 3]
   - [mailers, 1]
+  - [active_storage_analysis, 1]
   - [low_priority, 1]
