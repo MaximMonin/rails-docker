@@ -4,4 +4,9 @@ Rails.application.routes.draw do
   # basic rails home page (delete after)
   get '/' => "rails/welcome#index"
   root :to => "rails/welcome#index"
+
+  require 'sidekiq/web'
+  authenticate :user do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end
