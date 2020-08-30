@@ -44,6 +44,7 @@ RUN    echo "\n#################################################################
     && rails generate simple_form:install --bootstrap \
     && rails generate devise:install && rails generate devise:i18n:views \
     && rails action_text:install \
+    && rails action_mailbox:install \
 # Deleting migration from image (every build new version causing migration problems)    
 # Copy fixed version from project files
     && rm -f db/migrate/*.rb 
