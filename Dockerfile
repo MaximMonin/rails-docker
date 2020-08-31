@@ -1,9 +1,9 @@
 FROM ruby:2.7
 
-#Install Nodejs + Yarn + db-clients + ffmpeg
+#Install Nodejs + Yarn + db-clients + ffmpeg + mc (mcedit editor for credentials)
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \ 
     && apt-get update \
-    && apt install nodejs sqlite3 postgresql-client mariadb-client libmariadb-dev ffmpeg -y --no-install-recommends \
+    && apt install nodejs sqlite3 postgresql-client mariadb-client libmariadb-dev ffmpeg mc -y --no-install-recommends \
     && curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     && apt-get update && apt-get install yarn \
@@ -45,11 +45,10 @@ RUN    echo "\n#################################################################
     && rails generate devise:install && rails generate devise:i18n:views \
     && rails action_text:install \
     && rails action_mailbox:install \
-# Deleting migration from image (every build new version causing migration problems)    
-# Copy fixed version from project files
-    && rm -f db/migrate/*.rb 
-
-RUN sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/development.rb \
+# Moving migration from db/migrate (every build create new version causing migration problems)
+    && mkdir db/migrate/system && mv db/migrate/*.rb db/migrate/system/ \
+# Site access    
+    && sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/development.rb \
     && sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/test.rb
 
 COPY image /
