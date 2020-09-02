@@ -29,8 +29,8 @@ services:
     image: nginx:1.13.1
     restart: always
     container_name: rails-nginxtest
-    depends_on:
-      - railstest
+#    depends_on:
+#      - railstest
     expose:
       - 80
     volumes:
@@ -56,6 +56,7 @@ services:
       - REDIS_URL=redis://redis:6379
       - RAILS_MAX_THREADS=5
       - WEB_CONCURRENCY=2
+      - PIDFILE=tmp/pids/dev.pid
       - EDITOR=mcedit
       - APP_DATABASE_PASSWORD=rails
       - VIRTUAL_HOST
@@ -72,12 +73,14 @@ services:
     depends_on:
       - db
       - redis
+      - rails
     networks:
       default:
     environment:
       - RAILS_ENV=test
       - REDIS_URL=redis://redis:6379
       - RAILS_MAX_THREADS=5
+      - PIDFILE=tmp/pids/test.pid
       - WEB_CONCURRENCY=1
       - VIRTUAL_HOST
     volumes:

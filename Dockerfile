@@ -56,4 +56,4 @@ RUN yarn add bootstrap jquery popper.js dropzone vue-router bootstrap-vue vuex a
 COPY image /
 
 EXPOSE 3000
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD /puma-entrypoint.sh

@@ -1,5 +1,6 @@
 :verbose: false
 :timeout: 60
+:pidfile: tmp/pids/sidekiq.pid
 
 :concurrency: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 :queues:
