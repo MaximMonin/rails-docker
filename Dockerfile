@@ -51,9 +51,9 @@ RUN    echo "\n#################################################################
     && sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/development.rb \
     && sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/test.rb
 
-COPY image /
-
 RUN yarn add bootstrap jquery popper.js dropzone vue-router bootstrap-vue vuex axios actioncable-vue
+
+COPY image /
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]

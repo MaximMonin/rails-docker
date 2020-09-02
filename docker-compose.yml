@@ -24,8 +24,21 @@ services:
     networks:
       proxy:
       default:
-        aliases:
-          - railsnginx
+
+  nginxtest:
+    image: nginx:1.13.1
+    restart: always
+    container_name: rails-nginxtest
+    depends_on:
+      - railstest
+    expose:
+      - 80
+    volumes:
+      - ./app:/app
+      - ./cfg/nginxtest.conf:/etc/nginx/conf.d/default.conf
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      default:
 
   rails:
     image: maximmonin/rails
@@ -48,7 +61,27 @@ services:
       - VIRTUAL_HOST
     volumes:
      - ./app:/app
-     - ./cfg/mail:/etc/ssmtp
+     - /etc/localtime:/etc/localtime:ro
+    expose:
+      - 3000
+
+  railstest:
+    image: maximmonin/rails
+    container_name: rails-test
+    restart: always
+    depends_on:
+      - db
+      - redis
+    networks:
+      default:
+    environment:
+      - RAILS_ENV=test
+      - REDIS_URL=redis://redis:6379
+      - RAILS_MAX_THREADS=5
+      - WEB_CONCURRENCY=1
+      - VIRTUAL_HOST
+    volumes:
+     - ./app:/app
      - /etc/localtime:/etc/localtime:ro
     expose:
       - 3000
@@ -79,7 +112,6 @@ services:
       - VIRTUAL_HOST
     volumes:
      - ./app:/app
-     - ./cfg/mail:/etc/ssmtp
      - /etc/localtime:/etc/localtime:ro
 
   db:
