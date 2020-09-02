@@ -25,21 +25,6 @@ services:
       proxy:
       default:
 
-  nginxtest:
-    image: nginx:1.13.1
-    restart: always
-    container_name: rails-nginxtest
-    depends_on:
-      - railstest
-    expose:
-      - 80
-    volumes:
-      - ./app:/app
-      - ./cfg/nginxtest.conf:/etc/nginx/conf.d/default.conf
-      - /etc/localtime:/etc/localtime:ro
-    networks:
-      default:
-
   rails:
     image: maximmonin/rails
     container_name: rails
@@ -59,29 +44,6 @@ services:
       - PIDFILE=tmp/pids/dev.pid
       - EDITOR=mcedit
       - APP_DATABASE_PASSWORD=rails
-      - VIRTUAL_HOST
-    volumes:
-     - ./app:/app
-     - /etc/localtime:/etc/localtime:ro
-    expose:
-      - 3000
-
-  railstest:
-    image: maximmonin/rails
-    container_name: rails-test
-    restart: always
-    depends_on:
-      - db
-      - redis
-      - rails
-    networks:
-      default:
-    environment:
-      - RAILS_ENV=test
-      - REDIS_URL=redis://redis:6379
-      - RAILS_MAX_THREADS=5
-      - PIDFILE=tmp/pids/test.pid
-      - WEB_CONCURRENCY=1
       - VIRTUAL_HOST
     volumes:
      - ./app:/app
@@ -144,12 +106,54 @@ services:
       - ./redis:/data
       - /etc/localtime:/etc/localtime:ro
 
+  #######################################################
+  ## TESTING                                           ##
+  #######################################################
+  
+  nginxtest:
+    image: nginx:1.13.1
+    restart: always
+    container_name: rails-nginxtest
+    depends_on:
+      - railstest
+    expose:
+      - 80
+    volumes:
+      - ./app:/app
+      - ./cfg/nginxtest.conf:/etc/nginx/conf.d/default.conf
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      default:
+
+  railstest:
+    image: maximmonin/rails
+    container_name: rails-test
+    restart: always
+    depends_on:
+      - db
+      - redis
+      - rails
+    networks:
+      default:
+    environment:
+      - RAILS_ENV=test
+      - REDIS_URL=redis://redis:6379
+      - RAILS_MAX_THREADS=5
+      - PIDFILE=tmp/pids/test.pid
+      - WEB_CONCURRENCY=1
+      - VIRTUAL_HOST
+    volumes:
+     - ./app:/app
+     - /etc/localtime:/etc/localtime:ro
+    expose:
+      - 3000
+
   selenium:
     image: selenium/hub
     restart: always
     container_name: rails-selenium
     depends_on:
-      - loadbalance
+      -  nginxtest
     volumes:
       - /dev/shm:/dev/shm
       - /etc/localtime:/etc/localtime:ro

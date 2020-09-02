@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker exec -it rails rails test
+docker exec -it rails-test rails test
