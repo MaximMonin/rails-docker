@@ -29,8 +29,8 @@ services:
     image: nginx:1.13.1
     restart: always
     container_name: rails-nginxtest
-#    depends_on:
-#      - railstest
+    depends_on:
+      - railstest
     expose:
       - 80
     volumes:
