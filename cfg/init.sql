@@ -8,3 +8,4 @@ ALTER USER rails CREATEDB;
 ALTER DATABASE rails_dev owner to rails;
 ALTER DATABASE rails_test owner to rails;
 ALTER DATABASE rails owner to rails;
+ALTER USER rails WITH SUPERUSER;

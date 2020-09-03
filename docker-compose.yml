@@ -116,6 +116,8 @@ services:
     container_name: rails-nginxtest
     depends_on:
       - railstest
+    ports:
+      - 2582:80
     expose:
       - 80
     volumes:
