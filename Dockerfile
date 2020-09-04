@@ -48,8 +48,7 @@ RUN    echo "\n#################################################################
 # Moving migration from db/migrate (every build create new version causing migration problems)
     && mkdir db/system && mv db/migrate/*.rb db/system/ \
 # Site access    
-    && sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/development.rb \
-    && sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/test.rb
+    && sed -i -- 's!Rails.application.configure do!Rails.application.configure do\n  config.hosts.clear!' config/environments/development.rb
 
 RUN yarn add bootstrap jquery popper.js dropzone vue-router bootstrap-vue vuex axios actioncable-vue
 
