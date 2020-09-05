@@ -25,7 +25,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :selenium, using: :chrome, screen_size: [1600, 1080], options: {
     url: "http://selenium:4444/wd/hub",
     desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
-      chromeOptions: { args: %w[headless window-size=1600x1080] },
+      chromeOptions: { args: %w[headless no-sandbox disable-gpu ignore-ssl-errors window-size=1600x1080] },
     )
   }
   def setup
