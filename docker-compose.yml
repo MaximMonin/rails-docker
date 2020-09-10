@@ -32,6 +32,7 @@ services:
     depends_on:
       - db
       - redis
+      - monitoring
     networks:
       default:
         aliases:
@@ -107,6 +108,38 @@ services:
       - ./cfg/redis.conf:/redis.conf
       - /etc/localtime:/etc/localtime:ro
     command: [ "redis-server", "/redis.conf" ]
+    
+  monitoring:
+    image: prom/prometheus:v2.20.1
+    container_name: rails-prometheus
+    restart: always
+    depends_on:
+      - grafana
+    expose:
+      - 9090
+    networks:
+      default:
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./prometheus:/prometheus
+    
+  grafana:
+    image: grafana/grafana:7.1.5-ubuntu
+    container_name: rails-grafana
+    restart: always
+    expose:
+      - 3000
+    networks:
+      default:
+    volumes:
+      - ./grafana:/var/lib/grafana
+      - ./app:/app
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+      - GF_LOG_MODE=console file
+      - LOGDIR=/app/log
+    
 
   #######################################################
   ## TESTING                                           ##
