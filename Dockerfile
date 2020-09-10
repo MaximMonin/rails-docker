@@ -20,9 +20,10 @@ WORKDIR /app
 RUN    echo "\n#######################################################################" >> Gemfile \
     && echo "# Rails addon gems" >> Gemfile \
     && echo "# Job processing, auth, pagination, image/video processing," >> Gemfile \
-    && echo "# simple-forms, sms, file upload, file storage, localization" >> Gemfile \
+    && echo "# simple-forms, sms, file upload, file storage, localization, monitoring" >> Gemfile \
     && echo "#######################################################################" >> Gemfile \
     && echo "gem 'sidekiq', '>= 6'" >> Gemfile \
+    && echo "gem 'prometheus_exporter'" >> Gemfile \
     && echo "gem 'devise'" >> Gemfile \
     && echo "gem 'will_paginate', '>= 3'" >> Gemfile \
     && echo "gem 'image_processing', '~> 1.2'" >> Gemfile \

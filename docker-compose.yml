@@ -51,6 +51,7 @@ services:
      - /etc/localtime:/etc/localtime:ro
     expose:
       - 3000
+      - 9394
 
   sidekiq:
     image: maximmonin/rails
@@ -79,6 +80,9 @@ services:
     volumes:
      - ./app:/app
      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - 3000
+      - 9394
 
   db:
     image: postgres:12.3
@@ -120,8 +124,9 @@ services:
     networks:
       default:
     volumes:
-      - /etc/localtime:/etc/localtime:ro
       - ./prometheus:/prometheus
+      - ./cfg/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /etc/localtime:/etc/localtime:ro
     
   grafana:
     image: grafana/grafana:7.1.5-ubuntu
