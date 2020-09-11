@@ -132,6 +132,8 @@ services:
     image: grafana/grafana:7.1.5-ubuntu
     container_name: rails-grafana
     restart: always
+    ports:
+      - "2583:3000"
     expose:
       - 3000
     networks:
