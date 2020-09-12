@@ -49,6 +49,8 @@ services:
     volumes:
      - ./app:/app
      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "2584:9394"
     expose:
       - 3000
       - 9394
@@ -117,8 +119,6 @@ services:
     image: prom/prometheus:v2.20.1
     container_name: rails-prometheus
     restart: always
-    depends_on:
-      - grafana
     expose:
       - 9090
     networks:
