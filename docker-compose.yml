@@ -117,7 +117,7 @@ services:
       - -c
       - |
         echo 'Starting replication'
-        pg_basebackup -h db -U rails -p 5432 -D /var/lib/postgresql/data -Fp -Xs -P -R -w
+        pg_basebackup -h db -U rails -p 5432 -D /var/lib/postgresql/data -Fp -Xs -P -R -w -C -S replica1
         exec docker-entrypoint.sh postgres
     volumes:
       - ./dbreplica:/var/lib/postgresql/data

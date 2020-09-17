@@ -22,12 +22,18 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: rails
   password: rails
-  host: db
 
 
 development:
-  <<: *default
-  database: rails_dev
+  primary:
+    <<: *default
+    database: rails_dev
+    host: db
+  primary_replica:
+    <<: *default
+    database: rails_dev
+    host: db_replica
+    replica: true
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -83,7 +89,14 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: rails
-  username: rails
-  password: <%= ENV.fetch("APP_DATABASE_PASSWORD") {'rails'} %>
+  primary:
+    <<: *default
+    database: rails
+    host: db
+    password: <%= ENV.fetch("APP_DATABASE_PASSWORD") {'rails'} %>
+  primary_replica:
+    <<: *default
+    database: rails
+    host: db_replica
+    password: <%= ENV.fetch("APP_DATABASE_PASSWORD") {'rails'} %>
+    replica: true
