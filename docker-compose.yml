@@ -90,6 +90,13 @@ services:
     image: postgres:12.3
     restart: always
     container_name: rails-db
+    command: postgres -c max_connections=100
+                      -c shared_buffers=1GB
+                      -c effective_cache_size=1536MB
+                      -c maintenance_work_mem=256MB
+                      -c checkpoint_completion_target=0.7
+                      -c wal_buffers=8MB
+                      -c max_locks_per_transaction=1000
     networks:
       default:
         aliases:
@@ -118,7 +125,7 @@ services:
       - |
         echo 'Starting replication'
         pg_basebackup -h db -U rails -p 5432 -D /var/lib/postgresql/data -Fp -Xs -P -R -w -C -S replica1
-        exec docker-entrypoint.sh postgres
+        exec docker-entrypoint.sh postgres -c max_connections=100 -c shared_buffers=1GB -c effective_cache_size=1536MB -c maintenance_work_mem=256MB -c max_locks_per_transaction=1000
     volumes:
       - ./dbreplica:/var/lib/postgresql/data
       - /etc/localtime:/etc/localtime:ro
