@@ -19,12 +19,18 @@ WORKDIR /app
 
 RUN    echo "\n#######################################################################" >> Gemfile \
     && echo "# Rails addon gems" >> Gemfile \
-    && echo "# Job processing, auth, pagination, image/video processing," >> Gemfile \
+    && echo "# Job processing, auth, pagination, image/video processing, audit" >> Gemfile \
     && echo "# simple-forms, sms, file upload, file storage, localization, monitoring" >> Gemfile \
     && echo "#######################################################################" >> Gemfile \
     && echo "gem 'sidekiq', '>= 6'" >> Gemfile \
     && echo "gem 'prometheus_exporter'" >> Gemfile \
+    && echo "gem 'audited', '~> 4.9'" >> Gemfile \
     && echo "gem 'devise'" >> Gemfile \
+    && echo "gem 'omniauth-facebook'" >> Gemfile \
+    && echo "gem 'omniauth-google-oauth2'" >> Gemfile \
+    && echo "gem 'omniauth-twitter'" >> Gemfile \
+    && echo "gem 'omniauth-vkontakte'" >> Gemfile \
+    && echo "gem 'omniauth-instagram'" >> Gemfile \
     && echo "gem 'will_paginate', '>= 3'" >> Gemfile \
     && echo "gem 'image_processing', '~> 1.2'" >> Gemfile \
     && echo "gem 'streamio-ffmpeg', '>= 2'" >> Gemfile \
@@ -44,8 +50,10 @@ RUN    echo "\n#################################################################
     && bundle install \
     && rails generate simple_form:install --bootstrap \
     && rails generate devise:install && rails generate devise:i18n:views \
+    && rails g migration AddOmniauthToUsers provider:string uid:string \
     && rails action_text:install \
     && rails action_mailbox:install \
+    && rails generate audited:install --audited-changes-column-type json \
 # Moving migration from db/migrate (every build create new version causing migration problems)
     && mkdir db/system && mv db/migrate/*.rb db/system/ \
 # Site access    
