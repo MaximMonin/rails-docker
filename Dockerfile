@@ -19,11 +19,13 @@ WORKDIR /app
 
 RUN    echo "\n#######################################################################" >> Gemfile \
     && echo "# Rails addon gems" >> Gemfile \
-    && echo "# Job processing, auth, pagination, image/video processing, audit" >> Gemfile \
+    && echo "# Job processing, auth, pagination, image/video processing, audit, search" >> Gemfile \
     && echo "# simple-forms, sms, file upload, file storage, localization, monitoring" >> Gemfile \
     && echo "#######################################################################" >> Gemfile \
     && echo "gem 'sidekiq', '>= 6'" >> Gemfile \
     && echo "gem 'prometheus_exporter'" >> Gemfile \
+    && echo "gem 'elasticsearch-model'" >> Gemfile \
+    && echo "gem 'elasticsearch-rails'" >> Gemfile \
     && echo "gem 'audited', '~> 4.9'" >> Gemfile \
     && echo "gem 'devise'" >> Gemfile \
     && echo "gem 'omniauth-facebook'" >> Gemfile \
