@@ -32,7 +32,7 @@ RUN    echo "\n#################################################################
     && echo "gem 'omniauth-google-oauth2'" >> Gemfile \
     && echo "gem 'omniauth-twitter'" >> Gemfile \
     && echo "gem 'omniauth-vkontakte'" >> Gemfile \
-    && echo "gem 'omniauth-instagram'" >> Gemfile \
+    && echo "gem 'omniauth-github'" >> Gemfile \
     && echo "gem 'will_paginate', '>= 3'" >> Gemfile \
     && echo "gem 'image_processing', '~> 1.2'" >> Gemfile \
     && echo "gem 'streamio-ffmpeg', '>= 2'" >> Gemfile \
@@ -52,7 +52,6 @@ RUN    echo "\n#################################################################
     && bundle install \
     && rails generate simple_form:install --bootstrap \
     && rails generate devise:install && rails generate devise:i18n:views \
-    && rails g migration AddOmniauthToUsers provider:string uid:string \
     && rails action_text:install \
     && rails action_mailbox:install \
     && rails generate audited:install --audited-changes-column-type json \
