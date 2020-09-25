@@ -146,7 +146,25 @@ services:
       - ./cfg/redis.conf:/redis.conf
       - /etc/localtime:/etc/localtime:ro
     command: [ "redis-server", "/redis.conf" ]
-    
+
+  search:
+    image: elasticsearch:7.9.1
+    container_name: rails-search
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elastic:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - default
+
   monitoring:
     image: prom/prometheus:v2.20.1
     container_name: rails-prometheus
