@@ -2,7 +2,7 @@
 Ruby on Rails 6.x in Docker
 
 DockerFile + Docker-compose file to setup Ruby on Rails enviroment.   
-Includes Sidekiq server, Redis, Postgres, Prometheus, Grafana, Selenium Browser test setup, Postgres DB adminer   
+Includes Sidekiq server, Redis, Postgres, Prometheus, Grafana, Elasticsearch, Kibana, Selenium Browser test setup, Postgres DB adminer   
 
 ## Installation
 1. Build rails Image. Use build.sh. You can use docker pull maximmonin/rails instead.   
@@ -16,3 +16,4 @@ Run run_tests_system.sh to run system browser tests through selenium and rails-t
 Run run_webpack.sh to compile java scripts with webpack   
 Run run_precompile.sh to precompile assets for production use   
 Run run_shell.sh to enter inside container   
+Run run_elastic_indexes.sh to recreate all model's search indexes and import data to elasticsearch    
