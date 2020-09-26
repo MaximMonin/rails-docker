@@ -163,6 +163,7 @@ services:
         soft: -1
         hard: -1
     volumes:
+      - ./cfg/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./elastic:/usr/share/elasticsearch/data
     expose:
       - 9200
@@ -178,7 +179,7 @@ services:
     volumes:
       - ./cfg/kibana.yml:/usr/share/kibana/config/kibana.yml
     environment:
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
      - "5601:5601"
 
