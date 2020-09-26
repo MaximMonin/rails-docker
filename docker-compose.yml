@@ -40,6 +40,7 @@ services:
     environment:
       - RAILS_ENV=development
       - REDIS_URL=redis://redis:6379
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
       - RAILS_MAX_THREADS=5
       - WEB_CONCURRENCY=2
       - PIDFILE=tmp/pids/dev.pid
@@ -76,6 +77,7 @@ services:
     environment:
       - RAILS_ENV=development
       - REDIS_URL=redis://redis:6379
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
       - RAILS_MAX_THREADS=5
       - APP_DATABASE_PASSWORD=rails
       - VIRTUAL_HOST
@@ -147,11 +149,13 @@ services:
       - /etc/localtime:/etc/localtime:ro
     command: [ "redis-server", "/redis.conf" ]
 
-  search:
+  elasticsearch:
     image: elasticsearch:7.9.1
+    restart: always
     container_name: rails-search
     environment:
       - discovery.type=single-node
+      - cluster.routing.allocation.disk.threshold_enabled=false
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
@@ -160,10 +164,23 @@ services:
         hard: -1
     volumes:
       - ./elastic:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
+    expose:
+      - 9200
     networks:
-      - default
+      default:
+
+  kibana:
+    image: kibana:7.9.1
+    restart: always
+    container_name: rails-kibana
+    networks:
+      default:
+    volumes:
+      - ./cfg/kibana.yml:/usr/share/kibana/config/kibana.yml
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+     - "5601:5601"
 
   monitoring:
     image: prom/prometheus:v2.20.1
@@ -232,6 +249,7 @@ services:
     environment:
       - RAILS_ENV=test
       - REDIS_URL=redis://redis:6379
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
       - RAILS_MAX_THREADS=5
       - PIDFILE=tmp/pids/test.pid
       - WEB_CONCURRENCY=1
