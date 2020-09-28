@@ -37,6 +37,7 @@ RUN    echo "\n#################################################################
     && echo "gem 'image_processing', '~> 1.2'" >> Gemfile \
     && echo "gem 'streamio-ffmpeg', '>= 2'" >> Gemfile \
     && echo "gem 'simple_form'" >> Gemfile \
+    && echo "gem 'font-awesome-sass'" >> Gemfile \
     && echo "gem 'turbosms'" >> Gemfile \
     && echo "gem 'dotenv-rails'" >> Gemfile \
     && echo "gem 'carrierwave', '>= 2.0'" >> Gemfile \
